@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 
 df = pd.read_csv('adult.csv')
 
@@ -14,14 +15,14 @@ rfc = RandomForestClassifier(random_state=1)
 df.drop('native.country', inplace=True, axis=1)
 
 le = LabelEncoder()
-df['workclass'] = le.fit_transform(data['workclass'])
-df['education'] = le.fit_transform(data['education'])
-df['race'] = le.fit_transform(data['race'])
-df['occupation'] = le.fit_transform(data['occupation'])
-df['marital.status'] = le.fit_transform(data['marital.status'])
-df['relationship'] = le.fit_transform(data['relationship'])
-df['sex'] = le.fit_transform(data['sex'])
-df['income'] = le.fit_transform(data['income'])
+df['workclass'] = le.fit_transform(df['workclass'])
+df['education'] = le.fit_transform(df['education'])
+df['race'] = le.fit_transform(df['race'])
+df['occupation'] = le.fit_transform(df['occupation'])
+df['marital.status'] = le.fit_transform(df['marital.status'])
+df['relationship'] = le.fit_transform(df['relationship'])
+df['sex'] = le.fit_transform(df['sex'])
+df['income'] = le.fit_transform(df['income'])
 
 df = df.replace('?', np.nan)
 
@@ -34,3 +35,7 @@ rfc.fit(x_train, y_train)
 y_rfc = rfc.predict(x_test)
 
 print("Random Forest:", accuracy_score(y_test, y_rfc))
+
+'''
+Random Forest: 0.8356024158050978
+'''
