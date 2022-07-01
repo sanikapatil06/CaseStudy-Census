@@ -1,0 +1,36 @@
+import pandas as pd
+
+df = pd.read_csv('adult.csv')
+
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+
+from sklearn.preprocessing import LabelEncoder
+
+from sklearn.ensemble import RandomForestClassifier
+
+rfc = RandomForestClassifier(random_state=1)
+
+df.drop('native.country', inplace=True, axis=1)
+
+le = LabelEncoder()
+df['workclass'] = le.fit_transform(data['workclass'])
+df['education'] = le.fit_transform(data['education'])
+df['race'] = le.fit_transform(data['race'])
+df['occupation'] = le.fit_transform(data['occupation'])
+df['marital.status'] = le.fit_transform(data['marital.status'])
+df['relationship'] = le.fit_transform(data['relationship'])
+df['sex'] = le.fit_transform(data['sex'])
+df['income'] = le.fit_transform(data['income'])
+
+df = df.replace('?', np.nan)
+
+x = df.drop(['race', 'relationship', 'marital.status', 'income'], axis=1)
+y = df['income']
+
+x_train, x_test, y_train, y_test = train_test_split(x, y, random_state=0, test_size=0.3)
+
+rfc.fit(x_train, y_train)
+y_rfc = rfc.predict(x_test)
+
+print("Random Forest:", accuracy_score(y_test, y_rfc))
